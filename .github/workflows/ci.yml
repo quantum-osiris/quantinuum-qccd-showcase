@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test-and-wheel-smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install package and dev dependencies
+        run: |
+          python -m pip install --upgrade pip build
+          python -m pip install -e ".[dev]"
+      - name: Run test suite
+        env:
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+        run: pytest -v
+      - name: Isolated wheel smoke test (outside source tree)
+        run: |
+          python -m build --wheel --outdir dist
+          python -m venv /tmp/smoke-venv
+          /tmp/smoke-venv/bin/pip install dist/*.whl
+          cd /tmp
+          /tmp/smoke-venv/bin/qccd-showcase verify-all

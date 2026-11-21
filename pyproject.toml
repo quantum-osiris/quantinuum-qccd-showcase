@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qccd-showcase"
+version = "1.0.0"
+description = "Fault-tolerant QCCD compilation, qnexus hash-locked dispatch, Guppy/Selene benchmarking, BP+OSD qLDPC decoding, and Tierkreis/Quantum Origin provenance."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+authors = [
+  { name = "Devin Phillip Davis", email = "osiris.dnalang@gmail.com" }
+]
+keywords = [
+  "quantum-computing",
+  "quantinuum",
+  "pytket",
+  "qnexus",
+  "guppy",
+  "selene",
+  "tierkreis",
+  "qec",
+  "qldpc",
+  "bp-osd"
+]
+dependencies = [
+  "numpy>=1.26"
+]
+
+[project.optional-dependencies]
+quantinuum = [
+  "pytket>=2.0",
+  "pytket-quantinuum>=0.56",
+  "qnexus>=0.50",
+  "rfc8785>=0.1.4"
+]
+guppy = [
+  "guppylang>=0.15",
+  "selene-sim>=0.2"
+]
+dev = [
+  "pytest>=8.0"
+]
+
+[project.scripts]
+qccd-showcase = "qccd_showcase.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

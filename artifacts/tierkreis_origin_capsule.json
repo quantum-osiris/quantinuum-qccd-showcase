@@ -1,0 +1,216 @@
+{
+  "capsule_sha256": "f3de6ee923ba5ad00862fea593bb736fe6bf7ea97ac0e89e63fd2b933e5d7e42",
+  "hardware_receipt": {
+    "backend_id": "quantinuum_helios_selene",
+    "calibration_sha256": "a14d5b71ff0aced567e4dec7544f6406e5ab8788adcdeda2b6c51cb04a18c8a0",
+    "evidence_class": "SIMULATED",
+    "execution_duration_sec": 0.0,
+    "execution_id": "qexec-showcase-0001",
+    "execution_timestamp": "2026-11-21T00:00:00+00:00",
+    "native_gateset": "RZ,PhasedX,ZZPhase,ZZMax,Measure,Reset",
+    "nonce": "f06cc0028646e458bcf389e23a827783",
+    "provider": "Quantinuum",
+    "provider_job_id": null,
+    "queue_duration_sec": 0.0,
+    "receipt_id": "qrec-32fc66abcca0",
+    "receipt_sha256": "ee6456c438df791d3b0bba72c9c68987a46207d104e694229a6dc1583f49f8ba",
+    "result_sha256": "7a948ccc65eafc82b3009f8e4c8c28dcea33284a923178d3dfc60538f0340b6e",
+    "shots": 4096,
+    "signature_hmac_sha256": "f958e131ca23c33cdc3ca7fe00bd16da6732bd8ee70cc8106d2473f5c4de86e3",
+    "timestamp": "2026-11-21T00:00:00+00:00"
+  },
+  "quantum_origin_bundle": {
+    "counts": {
+      "XXX": {
+        "000": 503,
+        "001": 9,
+        "010": 9,
+        "011": 503,
+        "100": 9,
+        "101": 503,
+        "110": 503,
+        "111": 9
+      },
+      "XYY": {
+        "000": 9,
+        "001": 503,
+        "010": 503,
+        "011": 9,
+        "100": 503,
+        "101": 9,
+        "110": 9,
+        "111": 503
+      },
+      "YXY": {
+        "000": 9,
+        "001": 503,
+        "010": 503,
+        "011": 9,
+        "100": 503,
+        "101": 9,
+        "110": 9,
+        "111": 503
+      },
+      "YYX": {
+        "000": 9,
+        "001": 503,
+        "010": 503,
+        "011": 9,
+        "100": 503,
+        "101": 9,
+        "110": 9,
+        "111": 503
+      }
+    },
+    "job_id": null,
+    "provider": "Quantinuum Quantum Origin",
+    "receipt": {
+      "certified_min_entropy_per_round": 0.479405,
+      "confidence_z": 5.0,
+      "evidence_class": "SIMULATED",
+      "job_id": null,
+      "m3_lower_bound": 3.801299,
+      "m3_raw": 3.859375,
+      "provider": "Quantinuum Quantum Origin",
+      "raw_counts_sha256": "09333197d023fc8a1f03e0f94e5af4ce4f83b79633d70d80a7c52566646d313b",
+      "receipt_sha256": "6a0c74ca44f2386cc29500512ebf57ae7f1ae226ff9267e1e8ce0558c7957bbc",
+      "schema": "qccd-quantum-origin-receipt/v1",
+      "seed_num_bytes": 64,
+      "seed_sha256": "77c99637d00b1572e85b06ced0bbfe717911d77da09eb7f40d679970c54155bd",
+      "signature_hmac_sha256": "9c062e6bc525d82fb448daf972dfe2f47230a0af054cb8562551f88eee664179"
+    },
+    "signature": "9c062e6bc525d82fb448daf972dfe2f47230a0af054cb8562551f88eee664179"
+  },
+  "schema": "qccd-tierkreis-origin-capsule/v1",
+  "tierkreis_graph": {
+    "edges": [
+      {
+        "downstream": "guppy_selene_exec",
+        "input_key": "compiled_hugr",
+        "port_name": "output",
+        "upstream": "tket_compile"
+      },
+      {
+        "downstream": "quantum_origin_m3",
+        "input_key": "upstream_run",
+        "port_name": "output",
+        "upstream": "guppy_selene_exec"
+      }
+    ],
+    "name": "helios_qccd_provenance_dag",
+    "nodes": [
+      {
+        "function_name": "execute_selene_stabilizer",
+        "inputs": {
+          "compiled_hugr": {
+            "__tkr_ref__": {
+              "node_id": "tket_compile",
+              "port_name": "output",
+              "type_name": "dict"
+            }
+          },
+          "shots": 4096
+        },
+        "metadata": {},
+        "node_id": "guppy_selene_exec",
+        "worker": "guppy_worker"
+      },
+      {
+        "function_name": "certify_mermin_m3_seed",
+        "inputs": {
+          "shots_per_setting": 2048,
+          "upstream_run": {
+            "__tkr_ref__": {
+              "node_id": "guppy_selene_exec",
+              "port_name": "output",
+              "type_name": "dict"
+            }
+          }
+        },
+        "metadata": {},
+        "node_id": "quantum_origin_m3",
+        "worker": "quantinuum_worker"
+      },
+      {
+        "function_name": "compile_qccd_all_to_all",
+        "inputs": {
+          "logical_2q_gates": {
+            "__tkr_ref__": {
+              "node_id": "__inputs__",
+              "port_name": "logical_2q_gates",
+              "type_name": "int"
+            }
+          },
+          "target": "Helios-1"
+        },
+        "metadata": {},
+        "node_id": "tket_compile",
+        "worker": "pytket_worker"
+      }
+    ],
+    "outputs": {
+      "entropy_bundle": {
+        "node_id": "quantum_origin_m3",
+        "port_name": "output",
+        "type_name": "dict"
+      },
+      "stabilizer_result": {
+        "node_id": "guppy_selene_exec",
+        "port_name": "output",
+        "type_name": "dict"
+      }
+    },
+    "schema": "tierkreis-graph/v1",
+    "tasks": {
+      "guppy_selene_exec": {
+        "function_name": "execute_selene_stabilizer",
+        "inputs": {
+          "compiled_hugr": {
+            "__tkr_ref__": {
+              "node_id": "tket_compile",
+              "port_name": "output",
+              "type_name": "dict"
+            }
+          },
+          "shots": 4096
+        },
+        "metadata": {},
+        "node_id": "guppy_selene_exec",
+        "worker": "guppy_worker"
+      },
+      "quantum_origin_m3": {
+        "function_name": "certify_mermin_m3_seed",
+        "inputs": {
+          "shots_per_setting": 2048,
+          "upstream_run": {
+            "__tkr_ref__": {
+              "node_id": "guppy_selene_exec",
+              "port_name": "output",
+              "type_name": "dict"
+            }
+          }
+        },
+        "metadata": {},
+        "node_id": "quantum_origin_m3",
+        "worker": "quantinuum_worker"
+      },
+      "tket_compile": {
+        "function_name": "compile_qccd_all_to_all",
+        "inputs": {
+          "logical_2q_gates": {
+            "__tkr_ref__": {
+              "node_id": "__inputs__",
+              "port_name": "logical_2q_gates",
+              "type_name": "int"
+            }
+          },
+          "target": "Helios-1"
+        },
+        "metadata": {},
+        "node_id": "tket_compile",
+        "worker": "pytket_worker"
+      }
+    }
+  },
+  "tierkreis_graph_sha256": "8f5e8a14679be13a435915820bc2b045e30e49043278b0fa2abb98f9f0fdfc53"
+}

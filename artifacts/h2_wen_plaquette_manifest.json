@@ -1,0 +1,43 @@
+{
+  "algebraic_audit": {
+    "all_commute": true,
+    "lut_syndromes_verified": true,
+    "round2_lut_entries": 7,
+    "stabilizer_count": 16
+  },
+  "code_family": "[[16, 2, 4]] Toroidal Wen-Plaquette (State Preparation Only)",
+  "compiler_lock": true,
+  "h2_compilation": {
+    "depth": 19,
+    "gate_counts": {
+      "Barrier": 1,
+      "Conditional": 20,
+      "Measure": 24,
+      "PhasedX": 72,
+      "Reset": 8,
+      "Rz": 20,
+      "ZZPhase": 32
+    },
+    "isa_matches_frozen": true,
+    "isa_sha256": "02d5cb72849f9b473c022e68023486fdecc8c9f7fc3da9a9a9299c3482f31062",
+    "mode": "QuantinuumAPIOffline",
+    "n_clbits": 28,
+    "n_qubits": 20,
+    "precompile_matches_frozen": true,
+    "precompile_sha256": "b86aeabd70eecb7f5fbca5d0e1688e06d71dc358fd9fbaaab7fd8e4f9634230b",
+    "target_backend": "H2-1",
+    "zzphase_count": 32
+  },
+  "hash_lock": true,
+  "optimisation_level": 0,
+  "prior_art": "Iqbal et al., arXiv:2302.01917 (Quantinuum H1) & Quantinuum feed-forward tutorial",
+  "schema": "qccd-h2-wen-plaquette-manifest/v1",
+  "wilson_thresholds_95_gt_0_99": {
+    "1000": 997,
+    "10000": 9920,
+    "2000": 1989,
+    "5000": 4964,
+    "512": 512
+  },
+  "zenodo_doi": "10.5281/zenodo.24424726"
+}
